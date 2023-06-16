@@ -82,10 +82,12 @@ print("Kalkulator Matriks")
 
 while True:
     print("\nPilih operasi:")
-    print("1. Mencari solusi persamaan linier")
-    print("2. Mendiagonalisasi Matriks")
-    print("3. Mencari SVD")
-    print("4. Keluar")
+    print("1. Mencari solusi persamaan linier(input matrix)")
+    print("2. Mencari solusi persamaan linier(input persamaan)")
+    print("3. Mendiagonalisasi Matriks")
+    print("4. Mencari SVD")
+    print("5. SPL Complek dengan SVD")
+    print("0. Keluar")
     choice = int(input("Masukkan pilihan: "))
 
     if choice == 1:
@@ -93,10 +95,12 @@ while True:
     elif choice == 2:
         solve_equation()
     elif choice == 3:
+        diagonalize()
+    elif choice == 4:
         svd()
-    elif choice == 4:
+    elif choice == 5:
         spl_complex_svd()
-    elif choice == 4:
+    elif choice == 0:
         break
     else:
         print("Pilihan tidak valid. Silakan coba lagi.")
