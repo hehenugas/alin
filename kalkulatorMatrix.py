@@ -49,8 +49,9 @@ def solve_equation():
     print(x)
 
 def diagonalize():
+    n = int(input("Masukkan jumlah baris/kolom: "))
     print("Masukkan matriks:")
-    a = input_matrix()
+    a = input_matrix(n)
     diagonal = np.diag(np.diag(a))
     print("Diagonalisasi dari A adalah :")
     print(diagonal)
