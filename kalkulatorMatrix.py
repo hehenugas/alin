@@ -1,54 +1,49 @@
 import numpy as np
+import re
 
-def input_matrix():
+def input_matrix(n):
     return np.array([input().split() for _ in range(n)], dtype=float)
 
-def input_equation(n=0):
-    matrix = []
-    if n == 0:
-        n = int(input("Masukkan jumlah persamaan: "))
-
+def input_equation(n):
     print("Masukkan Persamaan")
-    lhs_matrix = []  # Matrix for the left-hand side of equations
-    rhs_matrix = []  # Matrix for the right-hand side of equations
+    kiri_matrix = []  
+    kanan_matrix = []  
     for _ in range(n):
         equation = input()
-        equation = equation.replace(" ", "")
-        equation = equation.split("=")
+        equation = equation.replace(" ", "").split("=")
 
-        # Process the left-hand side of the equation
-        lhs = equation[0]
-        lhs_terms = re.split(r"([+-])", lhs)  # Split on + or -
-        lhs_coefficients = []
-        for term in lhs_terms:
+        kiri = equation[0]
+        kiri_terms = re.split(r"([+-])", kiri)  
+        kiri_coefficients = []
+        for term in kiri_terms:
             if term != "+" and term != "-":
-                coefficient = term[:-1]  # Extract the coefficient (excluding the variable)
+                coefficient = term[:-1]  
                 if coefficient == "":
-                    coefficient = "1"  # If no coefficient is specified, assume it's 1
-                lhs_coefficients.append(float(coefficient))
+                    coefficient = "1"  
+                kiri_coefficients.append(float(coefficient))
 
-        # Process the right-hand side of the equation
-        rhs = float(equation[1])
+        kanan = float(equation[1])
 
-        lhs_matrix.append(lhs_coefficients)
-        rhs_matrix.append(rhs)
+        kiri_matrix.append(kiri_coefficients)
+        kanan_matrix.append(kanan)
 
-    lhs_matrix = np.array(lhs_matrix)
-    rhs_matrix = np.array(rhs_matrix)
-    return lhs_matrix, rhs_matrix
+    kiri_matrix = np.array(kiri_matrix)
+    kanan_matrix = np.array(kanan_matrix)
+    return kiri_matrix, kanan_matrix
 
 def solve_matrix():
+    n = int(input("Masukkan jumlah baris/kolom: "))
     print("Masukkan koefisien matriks A (baris x kolom):")
-    a = input_matrix()
+    a = input_matrix(n)
     print("Masukkan matriks B:")
-    b = input_matrix()
+    b = input_matrix(n)
     x = np.linalg.solve(a, b)
     print("Hasilnya adalah:")
     print(x)
 
 def solve_equation():
-    print("Masukkan jumlah persamaan")
-    a, b = input_equation()
+    n = int(input("Masukkan jumlah persamaan: "))
+    a, b = input_equation(n)
     x = np.linalg.solve(a, b)
     print("Hasilnya adalah:")
     print(x)
@@ -61,8 +56,9 @@ def diagonalize():
     print(diagonal)
     
 def svd():
+    n = int(input("Masukkan jumlah baris/kolom: "))
     print("Masukkan matriks:")
-    a = input_matrix()
+    a = input_matrix(n)
     U, S, V = np.linalg.svd(a)
     print("Matriks U:")
     print(U)
@@ -72,17 +68,17 @@ def svd():
     print(V)
     
 def spl_complex_svd():
+    n = int(input("Masukkan jumlah baris/kolom: "))
     print("Masukkan koefisien matriks A (baris x kolom):")
-    a = input_matrix()
+    a = input_matrix(n)
     print("Masukkan matriks B:")
-    b = input_matrix()
+    b = input_matrix(n)
     U,s,Vh = np.linalg.svd(a)
     c = np.dot(U.T.conj(), b)
     w = np.divide(c[:len(s)], s)
     x = np.dot(Vh.T.conj(), w)
 
 print("Kalkulator Matriks")
-n = int(input("Masukkan jumlah baris/kolom: "))
 
 while True:
     print("\nPilih operasi:")
@@ -93,9 +89,9 @@ while True:
     choice = int(input("Masukkan pilihan: "))
 
     if choice == 1:
-        solve_linear_equation()
+        solve_matrix()
     elif choice == 2:
-        diagonalize()
+        solve_equation()
     elif choice == 3:
         svd()
     elif choice == 4:
@@ -104,19 +100,3 @@ while True:
         break
     else:
         print("Pilihan tidak valid. Silakan coba lagi.")
-        
-def solve_linear_equation():
-    print("Masukkan koefisien matriks A (baris x kolom):")
-    a = np.array([input().split() for _ in range(n)], dtype=float)
-    print("Masukkan matriks B:")
-    b = np.array(input().split(), dtype=float)
-    x = np.linalg.solve(a, b)
-    print("Hasilnya adalah:")
-    print(x)
-
-def diagonalize():
-    print("Masukkan matriks:")
-    a = np.array([input().split() for _ in range(n)], dtype=float)
-    diagonal = np.diag(np.diag(a))
-    print("Diagonalisasi dari A adalah :")
-    print(diagonal)
