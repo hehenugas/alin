@@ -71,14 +71,18 @@ def solve_matrix():
 def solve_equation():
     n = int(input("Masukkan jumlah persamaan: "))
     matrix_a, matrix_b, c = input_equation(n)
-    x = np.linalg.solve(matrix_a, matrix_b)
-    print("Hasilnya adalah:")
-    length = len(c)
-    index = 0
-    while index < length:
-        result = str(c[index]) + " = " + str(x[index])
-        print(result)
-        index+=1
+
+    y = determine_solution(matrix_a, matrix_b)
+    print(y)
+    if y == "Unique solution":
+        x = np.linalg.solve(matrix_a, matrix_b)
+        print("Hasilnya adalah:")
+        index = 0
+        while index < len(c):
+            result = str(c[index]) + " = " + str(x[index])
+            print(result)
+            index+=1
+
         
 def diagonalize():
     n = int(input("Masukkan jumlah baris/kolom: "))
