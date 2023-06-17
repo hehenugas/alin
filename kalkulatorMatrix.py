@@ -91,15 +91,9 @@ def characteristicPolynomial_eigenvalue_eigenvector():
     characteristic_polynomial = np.poly(matrix_a)
     print("Karakteristik Polinomial: ", characteristic_polynomial)
     
-    eigenvalue = np.linalg.eigvals(matrix_a)
+    eigenvalue, eigenvector = np.linalg.eig(matrix_a)
     print("Eigenvalue: ", eigenvalue)
-    
-    eigenvectors = []
-    for _ in eigenvalue:
-        eigenvector = np.linalg.eig(matrix_a - eigenvalue * np.eye(matrix_a.shape[0]))[1][:, 0]
-        eigenvectors.append(eigenvector)
-    eigenvectors = np.array(eigenvectors).T
-    print("Eigenvector:\n", eigenvectors)
+    print("Eigenvector:\n", eigenvector)
         
 def diagonalize():
     n = int(input("Masukkan jumlah baris/kolom: "))
