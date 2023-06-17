@@ -86,22 +86,25 @@ def solve_equation():
 def characteristicPolynomial_eigenvalue_eigenvector():
     n = int(input("Masukkan jumlah baris/kolom: "))
     print("Masukkan matriks:")
-    matrix_a = input_matrix(n, float)
+    matrix_input = input_matrix(n, float)
     
-    characteristic_polynomial = np.poly(matrix_a)
+    characteristic_polynomial = np.poly(matrix_input)
     print("Karakteristik Polinomial: ", characteristic_polynomial)
     
-    eigenvalue, eigenvector = np.linalg.eig(matrix_a)
+    eigenvalue, eigenvector = np.linalg.eig(matrix_input)
     print("Eigenvalue: ", eigenvalue)
     print("Eigenvector:\n", eigenvector)
-        
-def diagonalize():
-    n = int(input("Masukkan jumlah baris/kolom: "))
-    print("Masukkan matriks:")
-    matrix_a = input_matrix(n)
-    diagonal = np.diag(np.diag(matrix_a))
-    print("Diagonalisasi dari matrix_a adalah :")
-    print(diagonal)
+    
+    A = matrix_input
+    if len(eigenvalue) == A.shape[0]:
+        print("Matrix A dapat didiagonalisasi")
+        print("Sehingga")
+        P = eigenvector
+        P_inv = np.linalg.inv(P)
+        print("Matrix P:\n", P)
+        print("Matrix P inverse:\n", P_inv)
+    else:
+        print("Matrix A tidak dapat didiagonalisasi, sehingga matrix P dan inversenya tidak dapat dicari")
     
 def svd():
     n = int(input("Masukkan jumlah baris/kolom: "))
