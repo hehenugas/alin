@@ -87,6 +87,7 @@ def spl_complex_svd():
     c = np.dot(U.T.conj(), b)
     w = np.divide(c[:len(s)], s)
     x = np.dot(Vh.T.conj(), w)
+    print(x)
 
 print("Kalkulator Matriks")
 
