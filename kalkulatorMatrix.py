@@ -8,6 +8,8 @@ def input_equation(n):
     print("Masukkan Persamaan")
     kiri_matrix = []  
     kanan_matrix = []  
+    variables = set()
+    
     for _ in range(n):
         equation = input()
         equation = equation.replace(" ", "").split("=")
@@ -21,15 +23,17 @@ def input_equation(n):
                 if coefficient == "":
                     coefficient = "1"  
                 kiri_coefficients.append(float(coefficient))
-
-        kanan = float(equation[1])
+                variable = term[-1]
+                variables.add(variable)
 
         kiri_matrix.append(kiri_coefficients)
+        kanan = float(equation[1])
         kanan_matrix.append(kanan)
 
     kiri_matrix = np.array(kiri_matrix)
     kanan_matrix = np.array(kanan_matrix)
-    return kiri_matrix, kanan_matrix
+    variables = np.sort(np.array(list(variables)))
+    return kiri_matrix, kanan_matrix, variables
 
 def solve_matrix():
     n = int(input("Masukkan jumlah baris/kolom: "))
@@ -43,11 +47,16 @@ def solve_matrix():
 
 def solve_equation():
     n = int(input("Masukkan jumlah persamaan: "))
-    a, b = input_equation(n)
+    a, b, c = input_equation(n)
     x = np.linalg.solve(a, b)
     print("Hasilnya adalah:")
-    print(x)
-
+    length = len(c)
+    index = 0
+    while index < length:
+        result = str(c[index]) + " = " + str(x[index])
+        print(result)
+        index+=1
+        
 def diagonalize():
     n = int(input("Masukkan jumlah baris/kolom: "))
     print("Masukkan matriks:")
