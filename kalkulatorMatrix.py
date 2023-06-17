@@ -43,7 +43,7 @@ def input_complex(num_equations, num_variables):
     print("Enter the equations:")
     for i in range(num_equations):
         equation = input(f"Equation {i+1}: ")
-        equation = re.sub(r'([a-e])', r'1j*\1', equation)  # Replace 'a' to 'e' with '1j*a' to '1j*e'
+        equation = re.sub(r'([a-z])', r'1j*\1', equation)  
         coefficients = re.findall(r'[+-]?\d+\.?\d*|\d*\.?\d+[j]', equation)
         for j in range(num_variables):
             matrix_a[i, j] = complex(coefficients[j])
