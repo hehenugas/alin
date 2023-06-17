@@ -1,10 +1,20 @@
 import numpy as np
 import re
 
-def input_matrix(n, type):
-    return np.array([input().split() for _ in range(n)], dtype=type)
+def input_matrix(n, data_type):
+    return np.array([input().split() for _ in range(n)], dtype=data_type)
 
-def input_equation(n):
+def parse_complex_coefficient(coefficient):
+    real_part = '0'
+    imaginary_part = '0'
+    if coefficient != '':
+        match = re.match(r'^([+-]?\d*\.?\d*)([ij])?$', coefficient)
+        if match:
+            real_part = match.group(1)
+            imaginary_part = match.group(2) or '1'
+    return complex(float(real_part), float(imaginary_part))
+
+def input_equation(n, data_type):
     print("Masukkan Persamaan")
     kiri_matrix = []  
     kanan_matrix = []  
@@ -22,18 +32,32 @@ def input_equation(n):
                 coefficient = term[:-1]  
                 if coefficient == "":
                     coefficient = "1"  
-                kiri_coefficients.append(float(coefficient))
+                if data_type == complex:
+                    kiri_coefficients.append(parse_complex_coefficient(coefficient))
+                elif data_type == float:
+                    kiri_coefficients.append(float(coefficient))
                 variable = term[-1]
                 variables.add(variable)
 
         kiri_matrix.append(kiri_coefficients)
-        kanan = float(equation[1])
+        kanan = data_type(equation[1])
         kanan_matrix.append(kanan)
 
-    kiri_matrix = np.array(kiri_matrix)
-    kanan_matrix = np.array(kanan_matrix)
+    kiri_matrix = np.array(kiri_matrix, dtype=data_type)
+    kanan_matrix = np.array(kanan_matrix, dtype=data_type)
     variables = np.sort(np.array(list(variables)))
     return kiri_matrix, kanan_matrix, variables
+
+def spl_complex_svd():
+    print("Matriks matrix_a:")
+    n = int(input("Masukkan jumlah baris: "))
+    print("Masukkan koefisien matriks matrix_a (baris x kolom):")
+    matrix_a, matrix_b, variables = input_equation(n, complex)
+    U, s, Vh = np.linalg.svd(matrix_a)
+    c = np.dot(U.T.conj(), matrix_b)
+    w = np.divide(c[:len(s)], s)
+    x = np.dot(Vh.T.conj(), w)
+    print(x)
 
 def determine_solution(matrix_a, matrix_b):
     rows, cols = matrix_a.shape
@@ -70,7 +94,7 @@ def solve_matrix():
     
 def solve_equation():
     n = int(input("Masukkan jumlah persamaan: "))
-    matrix_a, matrix_b, c = input_equation(n)
+    matrix_a, matrix_b, c = input_equation(n, float)
 
     y = determine_solution(matrix_a, matrix_b)
     print(y)
@@ -119,13 +143,9 @@ def svd():
     print(V)
     
 def spl_complex_svd():
-    print("Matriks matrix_a:")
     n = int(input("Masukkan jumlah baris: "))
-    print("Masukkan koefisien matriks matrix_a (baris x kolom):")
-    matrix_a = input_matrix(n, complex)
-    print("Matriks B:")
-    n = int(input("Masukkan jumlah baris: "))
-    matrix_b = input_matrix(n, complex)
+    matrix_a, matrix_b, c = input_equation(n, complex)
+
     U,s,Vh = np.linalg.svd(matrix_a)
     c = np.dot(U.T.conj(), matrix_b)
     w = np.divide(c[:len(s)], s)
