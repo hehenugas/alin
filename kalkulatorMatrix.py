@@ -1,8 +1,8 @@
 import numpy as np
 import re
 
-def input_matrix(n):
-    return np.array([input().split() for _ in range(n)], dtype=float)
+def input_matrix(n, type):
+    return np.array([input().split() for _ in range(n)], dtype=type)
 
 def input_equation(n):
     print("Masukkan Persamaan")
@@ -35,20 +35,43 @@ def input_equation(n):
     variables = np.sort(np.array(list(variables)))
     return kiri_matrix, kanan_matrix, variables
 
+def determine_solution(matrix_a, matrix_b):
+    rows, cols = matrix_a.shape
+    if rows != cols:
+        return "No unique solution"
+
+    det_a = np.linalg.det(matrix_a)
+    if det_a != 0:
+        return "Unique solution"
+
+    augmented_matrix = np.hstack((matrix_a, matrix_b.reshape(-1, 1)))
+    rref_matrix = np.linalg.matrix_rank(augmented_matrix)
+
+    if rref_matrix < np.linalg.matrix_rank(matrix_a):
+        return "No solution"
+    elif rref_matrix < cols:
+        return "Infinite solutions"
+    else:
+        return "Unique solution"
+
 def solve_matrix():
     n = int(input("Masukkan jumlah baris/kolom: "))
-    print("Masukkan koefisien matriks A (baris x kolom):")
-    a = input_matrix(n)
+    print("Masukkan koefisien matriks matrix_a (baris x kolom):")
+    matrix_a = input_matrix(n, float)
     print("Masukkan matriks B:")
-    b = input_matrix(n)
-    x = np.linalg.solve(a, b)
-    print("Hasilnya adalah:")
-    print(x)
-
+    matrix_b = input_matrix(n, float)
+    
+    y = determine_solution(matrix_a, matrix_b)
+    print(y)
+    if y == "Unique solution":
+        x = np.linalg.solve(matrix_a, matrix_b)
+        print("Hasilnya adalah:")
+        print(x)
+    
 def solve_equation():
     n = int(input("Masukkan jumlah persamaan: "))
-    a, b, c = input_equation(n)
-    x = np.linalg.solve(a, b)
+    matrix_a, matrix_b, c = input_equation(n)
+    x = np.linalg.solve(matrix_a, matrix_b)
     print("Hasilnya adalah:")
     length = len(c)
     index = 0
@@ -60,16 +83,16 @@ def solve_equation():
 def diagonalize():
     n = int(input("Masukkan jumlah baris/kolom: "))
     print("Masukkan matriks:")
-    a = input_matrix(n)
-    diagonal = np.diag(np.diag(a))
-    print("Diagonalisasi dari A adalah :")
+    matrix_a = input_matrix(n)
+    diagonal = np.diag(np.diag(matrix_a))
+    print("Diagonalisasi dari matrix_a adalah :")
     print(diagonal)
     
 def svd():
     n = int(input("Masukkan jumlah baris/kolom: "))
     print("Masukkan matriks:")
-    a = input_matrix(n)
-    U, S, V = np.linalg.svd(a)
+    matrix_a = input_matrix(n)
+    U, S, V = np.linalg.svd(matrix_a)
     print("Matriks U:")
     print(U)
     print("Matriks singular values:")
@@ -78,13 +101,15 @@ def svd():
     print(V)
     
 def spl_complex_svd():
-    n = int(input("Masukkan jumlah baris/kolom: "))
-    print("Masukkan koefisien matriks A (baris x kolom):")
-    a = input_matrix(n)
-    print("Masukkan matriks B:")
-    b = input_matrix(n)
-    U,s,Vh = np.linalg.svd(a)
-    c = np.dot(U.T.conj(), b)
+    print("Matriks matrix_a:")
+    n = int(input("Masukkan jumlah baris: "))
+    print("Masukkan koefisien matriks matrix_a (baris x kolom):")
+    matrix_a = input_matrix(n, complex)
+    print("Matriks B:")
+    n = int(input("Masukkan jumlah baris: "))
+    matrix_b = input_matrix(n, complex)
+    U,s,Vh = np.linalg.svd(matrix_a)
+    c = np.dot(U.T.conj(), matrix_b)
     w = np.divide(c[:len(s)], s)
     x = np.dot(Vh.T.conj(), w)
     print(x)
