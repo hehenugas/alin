@@ -56,7 +56,7 @@ def determine_solution(matrix_a, matrix_b):
 
 def solve_matrix():
     n = int(input("Masukkan jumlah baris/kolom: "))
-    print("Masukkan koefisien matriks matrix_a (baris x kolom):")
+    print("Masukkan matriks A:")
     matrix_a = input_matrix(n, float)
     print("Masukkan matriks B:")
     matrix_b = input_matrix(n, float)
@@ -81,8 +81,25 @@ def solve_equation():
         while index < len(c):
             result = str(c[index]) + " = " + str(x[index])
             print(result)
-            index+=1
+            index+=1            
 
+def characteristicPolynomial_eigenvalue_eigenvector():
+    n = int(input("Masukkan jumlah baris/kolom: "))
+    print("Masukkan matriks:")
+    matrix_a = input_matrix(n, float)
+    
+    characteristic_polynomial = np.poly(matrix_a)
+    print("Karakteristik Polinomial: ", characteristic_polynomial)
+    
+    eigenvalue = np.linalg.eigvals(matrix_a)
+    print("Eigenvalue: ", eigenvalue)
+    
+    eigenvectors = []
+    for _ in eigenvalue:
+        eigenvector = np.linalg.eig(matrix_a - eigenvalue * np.eye(matrix_a.shape[0]))[1][:, 0]
+        eigenvectors.append(eigenvector)
+    eigenvectors = np.array(eigenvectors).T
+    print("Eigenvector:\n", eigenvectors)
         
 def diagonalize():
     n = int(input("Masukkan jumlah baris/kolom: "))
@@ -95,7 +112,7 @@ def diagonalize():
 def svd():
     n = int(input("Masukkan jumlah baris/kolom: "))
     print("Masukkan matriks:")
-    matrix_a = input_matrix(n)
+    matrix_a = input_matrix(n, float)
     U, S, V = np.linalg.svd(matrix_a)
     print("Matriks U:")
     print(U)
@@ -124,7 +141,7 @@ while True:
     print("\nPilih operasi:")
     print("1. Mencari solusi persamaan linier(input matrix)")
     print("2. Mencari solusi persamaan linier(input persamaan)")
-    print("3. Mendiagonalisasi Matriks")
+    print("3. Mencari karakteristik polinomial, eigenvalue, eigenvector")
     print("4. Mencari SVD")
     print("5. SPL Complek dengan SVD")
     print("0. Keluar")
@@ -135,7 +152,7 @@ while True:
     elif choice == 2:
         solve_equation()
     elif choice == 3:
-        diagonalize()
+        characteristicPolynomial_eigenvalue_eigenvector()
     elif choice == 4:
         svd()
     elif choice == 5:
