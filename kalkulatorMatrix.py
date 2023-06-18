@@ -35,6 +35,26 @@ def input_equation(n):
     variables = np.sort(np.array(list(variables)))
     return kiri_matrix, kanan_matrix, variables
 
+def input_complex(num_equations, num_variables):
+    matrix_a = np.zeros((num_equations, num_variables), dtype=complex)
+    matrix_b = np.zeros(num_equations, dtype=complex)
+    equation_variables = set()
+
+    print("Masukkan persamaan:")
+    for i in range(num_equations):
+        equation = input()
+        equation = re.sub(r'([a-z])', r'1j*\1', equation) 
+        coefficients = re.findall(r'[+-]?\d+\.?\d*|\d*\.?\d+[j]', equation)
+        for j in range(num_variables):
+            matrix_a[i, j] = complex(coefficients[j])
+        matrix_b[i] = complex(coefficients[-1])
+        variables = re.findall(r'[a-z]', equation)
+        equation_variables.update(variables)
+
+    equation_variables = sorted(list(equation_variables))
+
+    return matrix_a, matrix_b, equation_variables
+
 def determine_solution(matrix_a, matrix_b):
     rows, cols = matrix_a.shape
     if rows != cols:
@@ -118,26 +138,6 @@ def svd():
     print("Matriks V:")
     print(V)
     
-def input_complex(num_equations, num_variables):
-    matrix_a = np.zeros((num_equations, num_variables), dtype=complex)
-    matrix_b = np.zeros(num_equations, dtype=complex)
-    equation_variables = set()
-
-    print("Enter the equations:")
-    for i in range(num_equations):
-        equation = input(f"Equation {i+1}: ")
-        equation = re.sub(r'([a-z])', r'1j*\1', equation) 
-        coefficients = re.findall(r'[+-]?\d+\.?\d*|\d*\.?\d+[j]', equation)
-        for j in range(num_variables):
-            matrix_a[i, j] = complex(coefficients[j])
-        matrix_b[i] = complex(coefficients[-1])
-        variables = re.findall(r'[a-z]', equation)
-        equation_variables.update(variables)
-
-    equation_variables = sorted(list(equation_variables))
-
-    return matrix_a, matrix_b, equation_variables
-    
 def spl_complex_svd():
     n = int(input("Masukkan jumlah persamaan: "))
     m = int(input("Masukkan jumlah variabel: "))
@@ -148,12 +148,11 @@ def spl_complex_svd():
     s_inv[:s.size, :s.size] = np.diag(1 / s)
     x = Vh.T @ s_inv @ U.T @ matrix_b
 
+    print(c)
     print("Hasilnya adalah:")
-    index = 0
-    while index < len(c):
-        result = str(c[index]) + " = " + str(x[index])
+    for _ in range(m):
+        result = str(c[_]) + " = " + str(x[_])
         print(result)
-        index+=1  
 
 print("Kalkulator Matriks")
 
@@ -163,7 +162,7 @@ while True:
     print("2. Mencari solusi persamaan linier(input persamaan)")
     print("3. Mencari karakteristik polinomial, eigenvalue, eigenvector")
     print("4. Mencari SVD")
-    print("5. SPL Complek dengan SVD")
+    print("5. SPL Complex dengan SVD")
     print("0. Keluar")
     choice = int(input("Masukkan pilihan: "))
 
