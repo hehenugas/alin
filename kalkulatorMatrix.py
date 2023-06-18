@@ -9,16 +9,16 @@ def input_equation(n):
     kiri_matrix = []  
     kanan_matrix = []  
     variables = set()
-    
+
     f = open('readme.txt', 'w')
     f.write('Persamaan :\n')
-    
+
     for _ in range(n):
         equation = input()
-        
+
         f.write(equation)
         f.write('\n')
-    
+
         equation = equation.replace(" ", "").split("=")
         kiri = equation[0]
         kiri_terms = re.split(r"([+-])", kiri)  
@@ -31,7 +31,6 @@ def input_equation(n):
                 kiri_coefficients.append(float(coefficient))
                 variable = term[-1]
                 variables.add(variable)
-
         kiri_matrix.append(kiri_coefficients)
         kanan = float(equation[1])
         kanan_matrix.append(kanan)
@@ -42,26 +41,53 @@ def input_equation(n):
     f.close()
     return kiri_matrix, kanan_matrix, variables
 
+def input_complex(num_equations, num_variables):
+    matrix_a = np.zeros((num_equations, num_variables), dtype=complex)
+    matrix_b = np.zeros(num_equations, dtype=complex)
+    equation_variables = set()
+    
+    f = open('Readme.txt','w')
+    f.write('Persamaan:\n ')
+
+    print("Masukkan persamaan:")
+    for i in range(num_equations):
+        equation = input()
+        
+        f.write(equation)
+        f.write('\n')
+        
+        equation = re.sub(r'([a-z])', r'1j*\1', equation) 
+        coefficients = re.findall(r'[+-]?\d+\.?\d*|\d*\.?\d+[j]', equation)
+        for j in range(num_variables):
+            matrix_a[i, j] = complex(coefficients[j])
+        matrix_b[i] = complex(coefficients[-1])
+        variables = re.findall(r'[a-z]', equation)
+        equation_variables.update(variables)
+
+    equation_variables = sorted(list(equation_variables))
+
+    f.close()
+    
+    return matrix_a, matrix_b, equation_variables
+
+
 def determine_solution(matrix_a, matrix_b):
     rows, cols = matrix_a.shape
     if rows != cols:
         return "No unique solution"
-
     det_a = np.linalg.det(matrix_a)
     if det_a != 0:
         return "Unique solution"
-
     augmented_matrix = np.hstack((matrix_a, matrix_b.reshape(-1, 1)))
     rref_matrix = np.linalg.matrix_rank(augmented_matrix)
 
     if rref_matrix < np.linalg.matrix_rank(matrix_a):
         return "No solution"
-        
+
     elif rref_matrix < cols:
         return "Infinite solutions"
     else:
         return "Unique solution"
-
 def solve_matrix():
     n = int(input("Masukkan jumlah baris/kolom: "))
     print("Masukkan matriks A:")
@@ -69,7 +95,7 @@ def solve_matrix():
     if matrix_a.shape[0] != matrix_a.shape[1]:
         print("ERROR : Matriks tidak persegi")
         return
-    
+
     f = open('readme.txt', 'w')
     f.write('Matriks A :\n')
     for row in matrix_a:
@@ -77,7 +103,7 @@ def solve_matrix():
         f.write(' '.join(str(element) for element in row))
         f.write(']')
         f.write('\n')
-    
+
     print("Masukkan matriks B:")
     matrix_b = input_matrix(n, float)
     if matrix_b.shape[1] > 1 or matrix_b.shape[0] !=  matrix_a.shape[0]:
@@ -90,18 +116,18 @@ def solve_matrix():
         f.write(' '.join(str(element) for element in row))
         f.write(']')
         f.write('\n')
-    
+
     y = determine_solution(matrix_a, matrix_b)
     print(y)
-    
+
     f.write('\n')
     f.write(y)
-        
+
     if y == "Unique solution":
         x = np.linalg.solve(matrix_a, matrix_b)
         print("Hasilnya adalah:")
         print(x)
-        
+
         f.write('\nHasil SPL adalah :\n')
         for row in x:
             f.write('[')
@@ -109,7 +135,7 @@ def solve_matrix():
             f.write(']')
             f.write('\n')
     f.close()
-            
+
 def solve_equation():
     n = int(input("Masukkan jumlah persamaan: "))
     print('(Ketik persamaan dalam bentuk (xa + yb + zc + kd + .... = i) dimana x,y,z,k dan i adalah koefisien)', '\n')
@@ -117,12 +143,12 @@ def solve_equation():
 
     y = determine_solution(matrix_a, matrix_b)
     print(y)
-    
+
     f = open('Readme.txt','a')
     f.write('\n')
     f.write(y)
     f.write('Hasilnya adalah:\n')
-    
+
     if y == "Unique solution":
         x = np.linalg.solve(matrix_a, matrix_b)
         print("Hasilnya adalah:")
@@ -130,14 +156,14 @@ def solve_equation():
         while index < len(c):
             result = str(c[index]) + " = " + str(x[index])
             print(result)
-            
+
             f.write(result)
             f.write('\n')
-            
+
             index+=1
-                        
+
     f.close()
-    
+
 def characteristicPolynomial_eigenvalue_eigenvector():
     n = int(input("Masukkan jumlah baris/kolom: "))
     print("Masukkan matriks:")
@@ -145,7 +171,7 @@ def characteristicPolynomial_eigenvalue_eigenvector():
     if matrix_input.shape[0] != matrix_input.shape[1]:
         print("ERROR : Matriks tidak persegi")
         return
-    
+
     f = open('Readme.txt','w')
     f.write('Matriks :\n')
     for row in matrix_input:
@@ -153,49 +179,49 @@ def characteristicPolynomial_eigenvalue_eigenvector():
         f.write(' '.join(str(element) for element in row))
         f.write(']')
         f.write('\n')
-    
-    
+
+
     characteristic_polynomial = np.poly(matrix_input)
     print("\nKarakteristik Polinomial: ", characteristic_polynomial)
-    
+
     f.write('\nKarakteristik Polinomial: \n')
     for row in characteristic_polynomial:
         f.write('[')
         f.write(str(row))
         f.write(']')
         f.write('\n')
-    
+
     eigenvalue, eigenvector = np.linalg.eig(matrix_input)
     print("Eigenvalue: ", eigenvalue)
     print("Eigenvector:\n", eigenvector)
-    
+
     f.write('\nEigenvalue : ')
     for row in eigenvalue:
         f.write('[')
         f.write(str(row))
         f.write(']')
         f.write('\n')
-    
+
     f.write('\nEigenvector : \n')
     for row in eigenvector:
         f.write('[')
         f.write(' '.join(str(element) for element in row))
         f.write(']')
         f.write('\n')
-    
+
     A = matrix_input
     if len(eigenvalue) == A.shape[0]:
         print("\nMatrix A dapat didiagonalisasi")
         print("Sehingga")
-        
+
         f.write('\nMatrix A dapat didiagonalisasi')
         f.write(' sehingga')
-        
+
         P = eigenvector
         P_inv = np.linalg.inv(P)
         print("Matrix P:\n", P)
         print("\nMatrix P inverse:\n", P_inv)
-        
+
         f.write('\nMatrix P:')
         for row in P:
             f.write('[')
@@ -215,7 +241,7 @@ def characteristicPolynomial_eigenvalue_eigenvector():
         f.write('\n')
         f.write('Matrix A tidak dapat didiagonalisasi, sehingga matrix P dan inversenya tidak dapat dicari')
         f.close()
-    
+
 def svd():
     n = int(input("Masukkan jumlah baris/kolom: "))
     print("Masukkan matriks:")
@@ -223,7 +249,7 @@ def svd():
     if matrix_a.shape[0] != matrix_a.shape[1]:
         print("ERROR : Matriks tidak persegi")
         return
-    
+
     f = open('Readme.txt','w')
     f.write('Matriks :\n')
     for row in matrix_a:
@@ -231,81 +257,69 @@ def svd():
             f.write(' '.join(str(element) for element in row))
             f.write(']')
             f.write('\n')
-            
+
     U, S, V = np.linalg.svd(matrix_a)
     print("Matriks U:")
     print(U)
-    
+
     f.write('Matriks U :\n')
     for row in U:
             f.write('[')
             f.write(' '.join(str(element) for element in row))
             f.write(']')
             f.write('\n')
-            
+
     print("Matriks singular values:")
     print(S)
-    
+
     f.write('Matriks singular values:\n')
     for row in S:
             f.write('[')
             f.write(str(row))
             f.write(']')
             f.write('\n')
-            
+
     print("Matriks V:")
     print(V)
-    
+
     f.write('Matriks V:\n')
     for row in V:
             f.write('[')
             f.write(' '.join(str(element) for element in row))
             f.write(']')
             f.write('\n')
-    
-    f.close()
-    
-def spl_complex_svd():
-    print("Matriks A:")
-    n = int(input("Masukkan jumlah baris untuk Matriks A: "))   
-    print("Masukkan koefisien matriks A (baris x kolom):")
-    matrix_a = input_matrix(n, complex)
-    
-    f = open('Readme.txt','w')
-    f.write('Matriks A :\n')
-    for row in matrix_a:
-            f.write('[')
-            f.write(' '.join(str(element) for element in row))
-            f.write(']')
-            f.write('\n')
-            
-    print("Matriks B:")
-    n = int(input("Masukkan jumlah baris untuk Matriks B: "))
-    print("Masukkan koefisien matriks B (baris x kolom):")
-    matrix_b = input_matrix(n, complex)
-    
-    f.write('\nMatriks B :\n')
-    for row in matrix_b:
-            f.write('[')
-            f.write(' '.join(str(element) for element in row))
-            f.write(']')
-            f.write('\n')
-            
-    U,s,Vh = np.linalg.svd(matrix_a)
-    c = np.dot(U.T.conj(), matrix_b)
-    w = np.divide(c[:len(s)], s)
-    x = np.dot(Vh.T.conj(), w)
-    print("Hasil SPL :")
-    print(x)
 
-    f.write('\nHasil SPL :\n')
-    for row in x:
-            f.write('[')
-            f.write(' '.join(str(element) for element in row))
-            f.write(']')
-            f.write('\n')
-    
     f.close()
+
+def spl_complex_svd():
+    n = int(input("Masukkan jumlah persamaan: "))
+    m = int(input("Masukkan jumlah variabel: "))
+
+    matrix_a, matrix_b, c = input_complex(n, m)
+    U, s, Vh = np.linalg.svd(matrix_a)
+    s_inv = np.zeros_like(matrix_a.T, dtype=complex)
+    s_inv[:s.size, :s.size] = np.diag(1 / s)
+    x = Vh.T @ s_inv @ U.T @ matrix_b
+
+    print(c)
+    
+    f = open('Readme.txt', 'a')
+    f.write('[')
+    for row in c:
+        f.write( "'")
+        f.write(' '.join(str(element) for element in row))
+        f.write("'")
+        f.write(',')
+    f.write("]\n")
+    
+    print("Hasilnya adalah:")
+    f.write('\nHasilnya adalah :\n')
+    
+    for _ in range(m):
+        result = str(c[_]) + " = " + str(x[_])
+        print(result)
+        f.write(result)
+        f.write('\n')
 
 print("Kalkulator Matriks")
 
