@@ -150,9 +150,12 @@ def round_complex(complex_number, digit):
     imag = math.ceil(complex_number.imag * (10 ** digit)) / (10 ** digit)
     return complex(real, imag)
 
-def fileProcessing(message, matrix):
+def fileProcessing_string(string):
     with open("readme.txt", 'a') as file:
-        print(message, file=file)
+        print(string, file=file)
+
+def fileProcessing_matrix(matrix):
+    with open("readme.txt", 'a') as file:
         print(matrix, file=file)
         
 def determine_solution(matrix_a, matrix_b):
@@ -194,8 +197,8 @@ def solve_equation():
     print("Masukkan Persamaan")
     matrix_a, matrix_b = input_equation(n)
 
-    print("\nMatrix A: \n", matrix_a); fileProcessing("\nMatrix A:", matrix_a)
-    print("\nMatrix B: \n", matrix_b); fileProcessing("\nMatrix B:", matrix_b)
+    print("\nMatrix A: \n", matrix_a); 
+    print("\nMatrix B: \n", matrix_b); 
     y = determine_solution(matrix_a, matrix_b)
     print(f"\n{y}")
     if y == "Unique solution":
