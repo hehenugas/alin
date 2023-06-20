@@ -7,7 +7,6 @@ def input_matrix(n, data_type):
     return np.array([input().split() for _ in range(n)], dtype=data_type)
 
 def input_equation(n):
-    print("Masukkan Persamaan")
     string_matrix_a = []
     string_matrix_b = []
     for _ in range(n):
@@ -192,6 +191,7 @@ def solve_matrix():
     
 def solve_equation():
     n = int(input("Masukkan jumlah persamaan: "))
+    print("Masukkan Persamaan")
     matrix_a, matrix_b = input_equation(n)
 
     print("\nMatrix A: \n", matrix_a); fileProcessing("\nMatrix A:", matrix_a)
