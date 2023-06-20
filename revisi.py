@@ -6,11 +6,30 @@ import os
 def input_matrix(n, data_type):
     return np.array([input().split() for _ in range(n)], dtype=data_type)
 
+def clear_txt():
+    with open("readme.txt",'w') as file:
+        pass
+
+def file_string(message):
+    with open("readme.txt", 'a') as file:
+        file.write(message)
+        file.write('\n')
+        
+def file_matrix(matrix):
+    with open("readme.txt", 'a') as file:
+        print(matrix, file=file)
+
+def fileProcessing(message, matrix):
+    with open("readme.txt", 'a') as file:
+        print(message, file=file)
+        print(matrix, file=file)
+        
 def input_equation(n):
+    print("Masukkan Persamaan"); clear_txt(); file_string('Persamaan :\n')
     string_matrix_a = []
     string_matrix_b = []
     for _ in range(n):
-        input_str = input().replace(" ", "").split("=")
+        input_str = input().replace(" ", "").split("="); file_matrix(input_str)
         buffer_kanan = input_str[1]
         string_matrix_b.append(buffer_kanan)
         buffer_kiri = ''
@@ -44,12 +63,12 @@ def input_equation(n):
 def input_complex(num_equations):
     matrix_a = []
     matrix_b = []
-    print("Masukkan persamaan:")
+    print("Masukkan persamaan:"); clear_txt(); file_string('Persamaan :')
 
     string_matrix_a = []
     string_matrix_b = []
     for _ in range(num_equations):
-        input_str = input().replace(" ", "").split("=")
+        input_str = input().replace(" ", "").split("="); file_matrix(input_str)
         buffer_kanan = input_str[1]
         string_matrix_b.append(buffer_kanan)
         buffer_kiri = ''
@@ -149,14 +168,6 @@ def round_complex(complex_number, digit):
     real = math.ceil(complex_number.real * (10 ** digit)) / (10 ** digit)
     imag = math.ceil(complex_number.imag * (10 ** digit)) / (10 ** digit)
     return complex(real, imag)
-
-def fileProcessing_string(string):
-    with open("readme.txt", 'a') as file:
-        print(string, file=file)
-
-def fileProcessing_matrix(matrix):
-    with open("readme.txt", 'a') as file:
-        print(matrix, file=file)
         
 def determine_solution(matrix_a, matrix_b):
     row, cols = matrix_a.shape
@@ -181,12 +192,11 @@ def solve_matrix():
     n = int(input("Masukkan jumlah baris/kolom: "))
     
     try:
-        print("Masukkan matriks A:")
-        matrix_a = input_matrix(n, float)
+        matrix_a = input_matrix(n, float); clear_txt(); fileProcessing('Matriks A :', matrix_a)
         print("Masukkan matriks B:")
-        matrix_b = input_matrix(n, float)
+        matrix_b = input_matrix(n, float); fileProcessing('Matriks B :', matrix_b)
     except Exception:
-        print("Terdapat kesalahan format yang Anda masukkan")
+        print("Terdapat kesalahan format yang Anda masukkan"); file_string('Terdapat kesalahan format yang Anda masukkan')
         return
     
     try:
@@ -195,10 +205,10 @@ def solve_matrix():
         if y == "Unique solution":
             x = np.linalg.solve(matrix_a, matrix_b)
             round_x = np.round(x, decimals=3)
-            print("Hasilnya adalah:")
-            print(round_x)
+            print("Hasilnya adalah:"); file_string('Hasilnya adalah :')
+            print(round_x); file_matrix(round_x)
     except Exception:
-        print("Tidak dapat melakukan operasi")
+        print("Tidak dapat melakukan operasi"); file_string('Tidak dapat melakukan operasi')
         return
     
 def solve_equation():
@@ -207,56 +217,56 @@ def solve_equation():
     try:
         matrix_a, matrix_b = input_equation(n)
     except Exception:
-        print("Terdapat kesalahan format yang Anda masukkan")
+        print("Terdapat kesalahan format yang Anda masukkan"); file_string('Terdapat kesalahan format yang Anda masukkan')
         return
 
     try:
-        print("\nMatrix A: \n", matrix_a); 
-        print("\nMatrix B: \n", matrix_b); 
+        print("\nMatrix A: \n", matrix_a); fileProcessing("\nMatrix A:", matrix_a)
+        print("\nMatrix B: \n", matrix_b); fileProcessing("\nMatrix B:", matrix_b)
         y = determine_solution(matrix_a, matrix_b)
         print(f"\n{y}")
         if y == "Unique solution":
             x = np.linalg.solve(matrix_a, matrix_b)
             round_x = np.round(x, decimals=3)
-            print("Hasilnya adalah:")
-            print(round_x)
+            print("Hasilnya adalah:"); file_string('Hasilnya adalah:\n')
+            print(round_x); file_string(round_x)
     except Exception:
-        print("Tidak dapat melakukan operasi")
+        print("Tidak dapat melakukan operasi"); file_string('Tidak dapat melakukan operasi')
 
 def characteristicPolynomial_eigenvalue_eigenvector():
     n = int(input("Masukkan jumlah baris: "))
-    print("Masukkan matriks:")
+    print("Masukkan matriks:"); clear_txt(); fileProcessing('Mastriks', matrix_input)
     try:
         matrix_input = input_matrix(n, float)
     except Exception:
-        print("Terdapat kesalahan format yang Anda masukkan")
+        print("Terdapat kesalahan format yang Anda masukkan"); file_string('Terdapat kesalahan format yang Anda masukkan')
         return
     
     characteristic_polynomial = np.poly(matrix_input)
-    print("\nKarakteristik Polinomial: \n", characteristic_polynomial)
+    print("\nKarakteristik Polinomial: \n", characteristic_polynomial); fileProcessing('Karakteristik Polinomial:', characteristic_polynomial)
     
     eigenvalue, eigenvector = np.linalg.eig(matrix_input)
-    print("\nEigenvalue: \n", eigenvalue)
-    print("\nEigenvector: \n", eigenvector)
+    print("\nEigenvalue: \n", eigenvalue); fileProcessing('Eigenvalue : ',eigenvalue)
+    print("\nEigenvector: \n", eigenvector); fileProcessing('Eigenvector', eigenvector)
     
     A = matrix_input
     if len(eigenvalue) == A.shape[0]:
-        print("\nMatrix A dapat didiagonalisasi")
-        print("Sehingga")
+        print("\nMatrix A dapat didiagonalisasi"); file_string('Matrix A dapat didiagonalisasi')
+        print("Sehingga"); file_string('Sehingga')
         P = eigenvector
         P_inv = np.linalg.inv(P)
-        print("\nMatrix P:\n", P)
-        print("\nMatrix P inverse:\n", P_inv)
+        print("\nMatrix P:\n", P); fileProcessing('Matriks P :', P)
+        print("\nMatrix P inverse:\n", P_inv); fileProcessing('Matriks P inverse :', P_inv)
     else:
-        print("Matrix A tidak dapat didiagonalisasi, sehingga matrix P dan inversenya tidak dapat dicari")
+        print("Matrix A tidak dapat didiagonalisasi, sehingga matrix P dan inversenya tidak dapat dicari"); file_string('Matrix A tidak dapat didiagonalisasi, sehingga matrix P dan inversenya tidak dapat dicari')
     
 def svd():
     n = int(input("Masukkan jumlah baris: "))
-    print("Masukkan matriks:")
+    print("Masukkan matriks:"); clear_txt()
     try:
-        matrix_a = input_matrix(n, float)
+        matrix_a = input_matrix(n, float); fileProcessing('Matriks :', matrix_a)
     except Exception:
-        print("Terdapat kesalahan format yang Anda masukkan")
+        print("Terdapat kesalahan format yang Anda masukkan"); file_string('Terdapat kesalahan format yang Anda masukkan')
         return
     
     try:
@@ -265,11 +275,11 @@ def svd():
         round_S = np.round(S, decimals=3)
         round_V = np.round(V, decimals=3)
         
-        print("\nMatriks U: \n", round_U)
-        print("\nMatriks singular values: \n", round_S)
-        print("\nMatriks V: \n", round_V)
+        print("\nMatriks U: \n", round_U); fileProcessing('Matriks U :', round_U)
+        print("\nMatriks singular values: \n", round_S); fileProcessing('Matriks singular values:', round_S)
+        print("\nMatriks V: \n", round_V); fileProcessing('Matriks V :', round_V)
     except Exception:
-        print("Tidak dapat melakukan operasi")
+        print("Tidak dapat melakukan operasi"); file_string('Tidak dapat melakukan operasi')
         return
     
 def spl_complex_svd():
@@ -279,7 +289,7 @@ def spl_complex_svd():
     try:
         matrix_a, matrix_b = input_complex(n)
     except Exception:
-        print("Terdapat kesalahan format yang Anda masukkan")
+        print("Terdapat kesalahan format yang Anda masukkan"); file_string('Terdapat kesalahan format yang Anda masukkan')
         return
     
     try:
@@ -288,14 +298,14 @@ def spl_complex_svd():
         s_inv[:len(s), :len(s)] = np.diag(1 / s)
         x = Vh.T.conj() @ s_inv @ U.T.conj() @ matrix_b
 
-        print("\nMatrix A: \n", matrix_a)
-        print("\nMatrix B: \n", matrix_b)
-        print("\nHasilnya adalah:")
+        print("\nMatrix A: \n", matrix_a); fileProcessing('\nMatriks A: ', matrix_a)
+        print("\nMatrix B: \n", matrix_b); fileProcessing('\nMatriks B: ', matrix_b)
+        print("\nHasilnya adalah:"); file_string('\nHasilnya adalah:')
         for i in range(m):
             round = round_complex(x[i], 3)
-            print(f"x{i+1} = {round}")
+            print(f"x{i+1} = {round}"); fileProcessing(round)
     except Exception:
-        print("Tidak dapat melakukan operasi")
+        print("Tidak dapat melakukan operasi"); file_string('Tidak dapat melakukan operasi')
         return
     
 print("Kalkulator Matriks")
