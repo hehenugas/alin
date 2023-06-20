@@ -179,38 +179,58 @@ def determine_solution(matrix_a, matrix_b):
 
 def solve_matrix():
     n = int(input("Masukkan jumlah baris/kolom: "))
-    print("Masukkan matriks A:")
-    matrix_a = input_matrix(n, float)
-    print("Masukkan matriks B:")
-    matrix_b = input_matrix(n, float)
     
-    y = determine_solution(matrix_a, matrix_b)
-    print(f"\n{y}")
-    if y == "Unique solution":
-        x = np.linalg.solve(matrix_a, matrix_b)
-        round_x = np.round(x, decimals=3)
-        print("Hasilnya adalah:")
-        print(round_x)
+    try:
+        print("Masukkan matriks A:")
+        matrix_a = input_matrix(n, float)
+        print("Masukkan matriks B:")
+        matrix_b = input_matrix(n, float)
+    except Exception:
+        print("Terdapat kesalahan format yang Anda masukkan")
+        return
+    
+    try:
+        y = determine_solution(matrix_a, matrix_b)
+        print(f"\n{y}")
+        if y == "Unique solution":
+            x = np.linalg.solve(matrix_a, matrix_b)
+            round_x = np.round(x, decimals=3)
+            print("Hasilnya adalah:")
+            print(round_x)
+    except Exception:
+        print("Tidak dapat melakukan operasi")
+        return
     
 def solve_equation():
     n = int(input("Masukkan jumlah persamaan: "))
     print("Masukkan Persamaan")
-    matrix_a, matrix_b = input_equation(n)
+    try:
+        matrix_a, matrix_b = input_equation(n)
+    except Exception:
+        print("Terdapat kesalahan format yang Anda masukkan")
+        return
 
-    print("\nMatrix A: \n", matrix_a); 
-    print("\nMatrix B: \n", matrix_b); 
-    y = determine_solution(matrix_a, matrix_b)
-    print(f"\n{y}")
-    if y == "Unique solution":
-        x = np.linalg.solve(matrix_a, matrix_b)
-        round_x = np.round(x, decimals=3)
-        print("Hasilnya adalah:")
-        print(round_x)
+    try:
+        print("\nMatrix A: \n", matrix_a); 
+        print("\nMatrix B: \n", matrix_b); 
+        y = determine_solution(matrix_a, matrix_b)
+        print(f"\n{y}")
+        if y == "Unique solution":
+            x = np.linalg.solve(matrix_a, matrix_b)
+            round_x = np.round(x, decimals=3)
+            print("Hasilnya adalah:")
+            print(round_x)
+    except Exception:
+        print("Tidak dapat melakukan operasi")
 
 def characteristicPolynomial_eigenvalue_eigenvector():
     n = int(input("Masukkan jumlah baris: "))
     print("Masukkan matriks:")
-    matrix_input = input_matrix(n, float)
+    try:
+        matrix_input = input_matrix(n, float)
+    except Exception:
+        print("Terdapat kesalahan format yang Anda masukkan")
+        return
     
     characteristic_polynomial = np.poly(matrix_input)
     print("\nKarakteristik Polinomial: \n", characteristic_polynomial)
@@ -233,33 +253,50 @@ def characteristicPolynomial_eigenvalue_eigenvector():
 def svd():
     n = int(input("Masukkan jumlah baris: "))
     print("Masukkan matriks:")
-    matrix_a = input_matrix(n, float)
-    U, S, V = np.linalg.svd(matrix_a)
-    round_U = np.round(U, decimals=3)
-    round_S = np.round(S, decimals=3)
-    round_V = np.round(V, decimals=3)
+    try:
+        matrix_a = input_matrix(n, float)
+    except Exception:
+        print("Terdapat kesalahan format yang Anda masukkan")
+        return
     
-    print("\nMatriks U: \n", round_U)
-    print("\nMatriks singular values: \n", round_S)
-    print("\nMatriks V: \n", round_V)
+    try:
+        U, S, V = np.linalg.svd(matrix_a)
+        round_U = np.round(U, decimals=3)
+        round_S = np.round(S, decimals=3)
+        round_V = np.round(V, decimals=3)
+        
+        print("\nMatriks U: \n", round_U)
+        print("\nMatriks singular values: \n", round_S)
+        print("\nMatriks V: \n", round_V)
+    except Exception:
+        print("Tidak dapat melakukan operasi")
+        return
     
 def spl_complex_svd():
     n = int(input("Masukkan jumlah persamaan: "))
     m = int(input("Masukkan jumlah variabel: "))
     
-    matrix_a, matrix_b = input_complex(n)
+    try:
+        matrix_a, matrix_b = input_complex(n)
+    except Exception:
+        print("Terdapat kesalahan format yang Anda masukkan")
+        return
     
-    U, s, Vh = np.linalg.svd(matrix_a)
-    s_inv = np.zeros_like(matrix_a.T, dtype=complex)
-    s_inv[:len(s), :len(s)] = np.diag(1 / s)
-    x = Vh.T.conj() @ s_inv @ U.T.conj() @ matrix_b
+    try:
+        U, s, Vh = np.linalg.svd(matrix_a)
+        s_inv = np.zeros_like(matrix_a.T, dtype=complex)
+        s_inv[:len(s), :len(s)] = np.diag(1 / s)
+        x = Vh.T.conj() @ s_inv @ U.T.conj() @ matrix_b
 
-    print("\nMatrix A: \n", matrix_a)
-    print("\nMatrix B: \n", matrix_b)
-    print("\nHasilnya adalah:")
-    for i in range(m):
-        round = round_complex(x[i], 3)
-        print(f"x{i+1} = {round}")
+        print("\nMatrix A: \n", matrix_a)
+        print("\nMatrix B: \n", matrix_b)
+        print("\nHasilnya adalah:")
+        for i in range(m):
+            round = round_complex(x[i], 3)
+            print(f"x{i+1} = {round}")
+    except Exception:
+        print("Tidak dapat melakukan operasi")
+        return
     
 print("Kalkulator Matriks")
 
