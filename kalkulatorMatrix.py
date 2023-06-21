@@ -7,7 +7,7 @@ def input_matrix(n, data_type):
     return np.array([input().split() for _ in range(n)], dtype=data_type)
 
 def clear_txt():
-    with open("readme.txt",'w') as file:
+    with open("hasil.txt",'w') as file:
         pass
 
 def fileProcessing(message):
