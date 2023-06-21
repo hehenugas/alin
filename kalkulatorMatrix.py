@@ -12,8 +12,7 @@ def clear_txt():
 
 def file_string(message):
     with open("readme.txt", 'a') as file:
-        file.write(message)
-        file.write('\n')
+        print(message, file=file)
         
 def file_matrix(matrix):
     with open("readme.txt", 'a') as file:
@@ -25,11 +24,11 @@ def fileProcessing(message, matrix):
         print(matrix, file=file)
         
 def input_equation(n):
-    print("Masukkan Persamaan"); clear_txt(); file_string('Persamaan :\n')
     string_matrix_a = []
     string_matrix_b = []
     for _ in range(n):
-        input_str = input().replace(" ", "").split("="); file_matrix(input_str)
+        input_str = input(); file_string(input_str)
+        input_str = input_str.replace(" ", "").split("=");
         buffer_kanan = input_str[1]
         string_matrix_b.append(buffer_kanan)
         buffer_kiri = ''
@@ -66,12 +65,12 @@ def input_equation(n):
 def input_complex(num_equations):
     matrix_a = []
     matrix_b = []
-    print("Masukkan persamaan:"); clear_txt(); file_string('Persamaan :')
 
     string_matrix_a = []
     string_matrix_b = []
     for _ in range(num_equations):
-        input_str = input().replace(" ", "").split("="); file_matrix(input_str)
+        input_str = input(); file_string(input_str)
+        input_str = input_str.replace(" ", "").split("=")
         buffer_kanan = input_str[1]
         string_matrix_b.append(buffer_kanan)
         buffer_kiri = ''
@@ -198,6 +197,7 @@ def solve_matrix():
     n = int(input("Masukkan jumlah baris/kolom: "))
     
     try:
+        print("Masukkan matriks A:")
         matrix_a = input_matrix(n, float); clear_txt(); fileProcessing('Matriks A :', matrix_a)
         print("Masukkan matriks B:")
         matrix_b = input_matrix(n, float); fileProcessing('Matriks B :', matrix_b)
@@ -219,7 +219,7 @@ def solve_matrix():
     
 def solve_equation():
     n = int(input("Masukkan jumlah persamaan: "))
-    print("Masukkan Persamaan")
+    print("Masukkan Persamaan"); clear_txt(); file_string('Persamaan :')
     try:
         matrix_a, matrix_b = input_equation(n)
     except Exception:
@@ -291,7 +291,7 @@ def svd():
 def spl_complex_svd():
     n = int(input("Masukkan jumlah persamaan: "))
     m = int(input("Masukkan jumlah variabel: "))
-    
+    print("Masukkan persamaan:"); clear_txt(); file_string('Persamaan :')
     try:
         matrix_a, matrix_b = input_complex(n)
     except Exception:
@@ -309,7 +309,7 @@ def spl_complex_svd():
         print("\nHasilnya adalah:"); file_string('\nHasilnya adalah:')
         for i in range(m):
             round = round_complex(x[i], 3)
-            print(f"x{i+1} = {round}"); fileProcessing(round)
+            print(f"x{i+1} = {round}"); 
     except Exception:
         print("Tidak dapat melakukan operasi"); file_string('Tidak dapat melakukan operasi')
         return
