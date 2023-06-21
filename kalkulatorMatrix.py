@@ -241,9 +241,9 @@ def solve_equation():
 
 def characteristicPolynomial_eigenvalue_eigenvector():
     n = int(input("Masukkan jumlah baris: "))
-    print("Masukkan matriks:"); clear_txt(); fileProcessing('Mastriks', matrix_input)
+    print("Masukkan matriks:"); clear_txt()
     try:
-        matrix_input = input_matrix(n, float)
+        matrix_input = input_matrix(n, float); fileProcessing('Matriks', matrix_input)
     except Exception:
         print("Terdapat kesalahan format yang Anda masukkan"); file_string('Terdapat kesalahan format yang Anda masukkan')
         return
@@ -270,7 +270,7 @@ def svd():
     n = int(input("Masukkan jumlah baris: "))
     print("Masukkan matriks:"); clear_txt()
     try:
-        matrix_a = input_matrix(n, float); fileProcessing('Matriks :', matrix_a)
+        matrix_a = input_matrix(n, float); fileProcessing('Matriks :', matrix_a); file_string("")
     except Exception:
         print("Terdapat kesalahan format yang Anda masukkan"); file_string('Terdapat kesalahan format yang Anda masukkan')
         return
@@ -281,9 +281,9 @@ def svd():
         round_S = np.round(S, decimals=3)
         round_V = np.round(V, decimals=3)
         
-        print("\nMatriks U: \n", round_U); fileProcessing('Matriks U :', round_U)
-        print("\nMatriks singular values: \n", round_S); fileProcessing('Matriks singular values:', round_S)
-        print("\nMatriks V: \n", round_V); fileProcessing('Matriks V :', round_V)
+        print("\nMatriks U: \n", round_U); fileProcessing('Matriks U :', round_U); file_string("")
+        print("\nMatriks singular values: \n", round_S); fileProcessing('Matriks singular values:', round_S); file_string("")
+        print("\nMatriks V: \n", round_V); fileProcessing('Matriks V :', round_V); file_string("")
     except Exception:
         print("Tidak dapat melakukan operasi"); file_string('Tidak dapat melakukan operasi')
         return
