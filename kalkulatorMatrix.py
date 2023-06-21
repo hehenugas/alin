@@ -11,7 +11,7 @@ def clear_txt():
         pass
 
 def fileProcessing(message):
-    with open("readme.txt", 'a') as file:
+    with open("hasil.txt", 'a') as file:
         print(message, file=file)
         
 def input_equation(n):
