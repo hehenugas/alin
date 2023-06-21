@@ -198,16 +198,16 @@ def solve_matrix():
     
     try:
         print("Masukkan matriks A:")
-        matrix_a = input_matrix(n, float); clear_txt(); fileProcessing('Matriks A :', matrix_a)
+        matrix_a = input_matrix(n, float); clear_txt(); fileProcessing('Matriks A :', matrix_a); file_string("")
         print("Masukkan matriks B:")
-        matrix_b = input_matrix(n, float); fileProcessing('Matriks B :', matrix_b)
+        matrix_b = input_matrix(n, float); fileProcessing('Matriks B :', matrix_b); 
     except Exception:
         print("Terdapat kesalahan format yang Anda masukkan"); file_string('Terdapat kesalahan format yang Anda masukkan')
         return
     
     try:
         y = determine_solution(matrix_a, matrix_b)
-        print(f"\n{y}")
+        print(f"\nJenis Solusi: \n{y}\n"); file_string("\nJenis solusi :"); file_string(y); file_string("")
         if y == "Unique solution":
             x = np.linalg.solve(matrix_a, matrix_b)
             round_x = np.round(x, decimals=3)
@@ -230,11 +230,11 @@ def solve_equation():
         print("\nMatrix A: \n", matrix_a); fileProcessing("\nMatrix A:", matrix_a)
         print("\nMatrix B: \n", matrix_b); fileProcessing("\nMatrix B:", matrix_b)
         y = determine_solution(matrix_a, matrix_b)
-        print(f"\n{y}")
+        print(f"\nJenis Solusi: \n{y}\n"); file_string("\nJenis solusi :"); file_string(y)
         if y == "Unique solution":
             x = np.linalg.solve(matrix_a, matrix_b)
             round_x = np.round(x, decimals=3)
-            print("Hasilnya adalah:"); file_string('Hasilnya adalah:\n')
+            print("Hasilnya adalah:"); file_string('\nHasilnya adalah:')
             print(round_x); file_string(round_x)
     except Exception:
         print("Tidak dapat melakukan operasi"); file_string('Tidak dapat melakukan operasi')
