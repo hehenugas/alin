@@ -44,8 +44,11 @@ def input_equation(n):
     a = []
     for row in string_matrix_a:
         extracted_sublist = []
-        for element in row:
-            matches = re.findall(r'-?\d+', element)
+        for i in range(len(row)):
+            for j in range(len(row[i])):
+                temp = re.sub(r'(?<![0-9])[a-zA-Z]', r'1\g<0>', row[i]) 
+                row[i] = temp
+            matches = re.findall(r'-?\d+', row[i])
             extracted_element = int(matches[0])
             extracted_sublist.append(extracted_element)
         a.append(extracted_sublist)
@@ -125,11 +128,14 @@ def input_complex(num_equations):
     numbers = []
     for row in string_matrix_a:
         extracted_sublist = []
-        for element in row:
-            if 'i' in element:
+        for i in range(len(row)):
+            if 'i' in row[i]:
                 extracted_element = 0
             else:
-                matches = re.findall(r'-?\d+', element)
+                for _ in range(len(row[i])):
+                    temp = re.sub(r'(?<![0-9])[a-zA-Z]', r'1\g<0>', row[i])
+                    row[i] =  temp
+                matches = re.findall(r'-?\d+', row[i])
                 extracted_element = int(matches[0])
             extracted_sublist.append(extracted_element)
         numbers.append(extracted_sublist)
