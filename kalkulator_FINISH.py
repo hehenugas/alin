@@ -217,8 +217,8 @@ def solve_matrix():
                 )
         
         print("Masukkan matriks B:")
-        input_b = input_matrix(n, float)
-        matrix_b = np.squeeze(input_b); fileProcessing('\nMatriks B :'); fileProcessing(matrix_b)
+        matrix_b = input_matrix(n, float)
+        
     except Exception:
         print("Terdapat kesalahan format yang Anda masukkan"); fileProcessing('\nTerdapat kesalahan format yang Anda masukkan')
         return
