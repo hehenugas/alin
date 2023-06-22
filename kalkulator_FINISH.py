@@ -191,8 +191,8 @@ def solve_matrix():
         
         print(  "+----------------------------------------------------------------+\n"
                 " - Jika terdapat matrix 1 2 3 \n"
-                "                      4 5 6 \n"
-                "                      7 8 9 \n"
+                "                        4 5 6 \n"
+                "                        7 8 9 \n"
                 " - Inputkan :  \n"
                 "       1(spasi)2(spasi)3 \n"
                 "       4(spasi)5(spasi)6 \n"
@@ -293,8 +293,8 @@ def characteristicPolynomial_eigenvalue_eigenvector():
     
     print(  "+----------------------------------------------------------------+\n"
             " - Jika terdapat matrix 1 2 3 \n"
-            "                      4 5 6 \n"
-            "                      7 8 9 \n"
+            "                        4 5 6 \n"
+            "                        7 8 9 \n"
             " - Inputkan :  \n"
             "       1(spasi)2(spasi)3 \n"
             "       4(spasi)5(spasi)6 \n"
@@ -333,8 +333,8 @@ def svd():
     
     print(  "+----------------------------------------------------------------+\n"
             " - Jika terdapat matrix 1 2 3 \n"
-            "                      4 5 6 \n"
-            "                      7 8 9 \n"
+            "                        4 5 6 \n"
+            "                        7 8 9 \n"
             " - Inputkan :  \n"
             "       1(spasi)2(spasi)3 \n"
             "       4(spasi)5(spasi)6 \n"
