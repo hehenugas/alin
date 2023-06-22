@@ -188,8 +188,34 @@ def solve_matrix():
     n = int(input("Masukkan jumlah baris: "))
     
     try:
+        
+        print(  "+----------------------------------------------------------------+\n"
+                " - Jika terdapat matrix 1 2 3 \n"
+                "                      4 5 6 \n"
+                "                      7 8 9 \n"
+                " - Inputkan :  \n"
+                "       1(spasi)2(spasi)3 \n"
+                "       4(spasi)5(spasi)6 \n"
+                "       7(spasi)8(spasi)9 \n"
+                " - Tidak boleh ada nilai yang kosong pada tiap baris \n"
+                "+----------------------------------------------------------------+ \n"  
+            )
+        
         print("Masukkan matriks A:")
         matrix_a = input_matrix(n, float); clear_txt(); fileProcessing('\nMatriks A :'); fileProcessing(matrix_a)
+        
+        print(  "+----------------------------------------------------------------+\n"
+                " - Untuk Matrix B, Jika terdapat matrix  \n"
+                "       1 \n"
+                "       2 \n"
+                "       3 \n"
+                " - Inputkan : \n"
+                "       1(enter) \n"
+                "       2(enter) \n"
+                "       3(enter) \n"
+                "+----------------------------------------------------------------+ \n"  
+                )
+        
         print("Masukkan matriks B:")
         input_b = input_matrix(n, float)
         matrix_b = np.squeeze(input_b); fileProcessing('\nMatriks B :'); fileProcessing(matrix_b)
@@ -215,7 +241,27 @@ def solve_matrix():
         return
     
 def solve_equation():
+    
+    print(  "+----------------------------------------------------------------------------+\n"
+            " - Program ini sama seperti menu 1, namun menggunakan input persamaan langsung  \n"
+            " - Variabel yang digunakan adalah x1, x2, x3 ... xn \n"
+            " - contohnya jika terdapat persamaan \n"
+            "       3x1 + 2x2 = 5 \n"
+            " - maka inputkan saja persis seperti persamaan itu \n"
+            "   yaitu: \n"
+            "       3x1 + 2x2 = 5 : \n"
+            " - jika salah satu koefisien tidak ada, maka tuliskan saja dengan angka 0 \n"
+            "   misalnya terdapat 2 persamaan sebagai berikut \n"
+            "       3x1 = 5 \n"
+            "       4x1 + 2x2 = 20 \n"
+            " - maka intputkan :"
+            "       3x1 + 0x2 = 5 \n"
+            "       4x1 + 2x2 = 20 \n"
+            "+---------------------------------------------------------------------------+ \n"  
+            )
+    
     n = int(input("Masukkan jumlah persamaan: "))
+    m = int(input("Masukkan Jumlah variabel: "))
     print("Masukkan Persamaan"); clear_txt(); fileProcessing('Persamaan :')
     try:
         matrix_a, matrix_b = input_equation(n)
@@ -223,6 +269,8 @@ def solve_equation():
         print("Terdapat kesalahan format yang Anda masukkan"); fileProcessing('\nTerdapat kesalahan format yang Anda masukkan')
         return
 
+    print(matrix_a); print(matrix_b)
+    
     try:
         y = determine_solution(matrix_a, matrix_b)
         print(f"\nJenis Solusi: \n{y}\n"); fileProcessing("\nJenis solusi :"); fileProcessing(y)
@@ -242,6 +290,19 @@ def solve_equation():
 
 def characteristicPolynomial_eigenvalue_eigenvector():
     n = int(input("Masukkan jumlah baris: "))
+    
+    print(  "+----------------------------------------------------------------+\n"
+            " - Jika terdapat matrix 1 2 3 \n"
+            "                      4 5 6 \n"
+            "                      7 8 9 \n"
+            " - Inputkan :  \n"
+            "       1(spasi)2(spasi)3 \n"
+            "       4(spasi)5(spasi)6 \n"
+            "       7(spasi)8(spasi)9 \n"
+            " - Tidak boleh ada nilai yang kosong pada tiap baris \n"
+            "+----------------------------------------------------------------+ \n"  
+          )
+    
     print("Masukkan matriks:"); clear_txt()
     try:
         matrix_input = input_matrix(n, float); fileProcessing('\nMatriks :'); fileProcessing(matrix_input)
@@ -269,6 +330,20 @@ def characteristicPolynomial_eigenvalue_eigenvector():
     
 def svd():
     n = int(input("Masukkan jumlah baris: "))
+    
+    print(  "+----------------------------------------------------------------+\n"
+            " - Jika terdapat matrix 1 2 3 \n"
+            "                      4 5 6 \n"
+            "                      7 8 9 \n"
+            " - Inputkan :  \n"
+            "       1(spasi)2(spasi)3 \n"
+            "       4(spasi)5(spasi)6 \n"
+            "       7(spasi)8(spasi)9 \n"
+            " - Tidak boleh ada nilai yang kosong pada tiap baris \n"
+            "+----------------------------------------------------------------+ \n"  
+          )
+    
+    
     print("Masukkan matriks:"); clear_txt()
     try:
         matrix_a = input_matrix(n, float); fileProcessing('\nMatriks:'); fileProcessing(matrix_a)
@@ -290,6 +365,25 @@ def svd():
         return
     
 def spl_complex_svd():
+    
+    print(  "+----------------------------------------------------------------------------+\n"
+            " - Program ini menerima input persamaan langsung  \n"
+            " - Variabel yang digunakan adalah x1, x2, x3 ... xn \n"
+            " - contohnya jika terdapat persamaan complex \n"
+            "       3x1 + 2ix2 = 5 \n"
+            " - maka inputkan saja persis seperti persamaan itu \n"
+            "   yaitu: \n"
+            "       3x1 + 2ix2 = 5 : \n"
+            " - jika salah satu koefisien tidak ada, maka tuliskan saja dengan angka 0 \n"
+            "   misalnya terdapat 2 persamaan sebagai berikut \n"
+            "       3x1 = 5 \n"
+            "       4x1 + 2ix2 = 20 \n"
+            " - maka intputkan :"
+            "       3x1 + 0x2 = 5 \n"
+            "       4x1 + 2ix2 = 20 \n"
+            "+---------------------------------------------------------------------------+ \n"  
+        )
+    
     n = int(input("Masukkan jumlah persamaan: "))
     m = int(input("Masukkan jumlah variabel: "))
     print("Masukkan persamaan:"); clear_txt(); fileProcessing('Persamaan :')
@@ -331,18 +425,23 @@ while True:
     choice = int(input("Masukkan pilihan: "))
 
     if choice == 1:
+        os.system('cls' if os.name == 'nt' else 'clear')
         solve_matrix()
         input("\nPress Enter to continue...")
     elif choice == 2:
+        os.system('cls' if os.name == 'nt' else 'clear')
         solve_equation()
         input("\nPress Enter to continue...")
     elif choice == 3:
+        os.system('cls' if os.name == 'nt' else 'clear')
         characteristicPolynomial_eigenvalue_eigenvector()
         input("\nPress Enter to continue...")
     elif choice == 4:
+        os.system('cls' if os.name == 'nt' else 'clear')
         svd()
         input("\nPress Enter to continue...")
     elif choice == 5:
+        os.system('cls' if os.name == 'nt' else 'clear')
         spl_complex_svd()
         input("\nPress Enter to continue...")
     elif choice == 0:
