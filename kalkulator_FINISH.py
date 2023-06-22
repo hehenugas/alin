@@ -185,18 +185,17 @@ def determine_solution(a, b):
         return "No solution"
 
 def solve_matrix():
-    n = int(input("Masukkan jumlah baris/kolom: "))
+    n = int(input("Masukkan jumlah baris: "))
     
     try:
         print("Masukkan matriks A:")
         matrix_a = input_matrix(n, float); clear_txt(); fileProcessing('\nMatriks A :'); fileProcessing(matrix_a)
         print("Masukkan matriks B:")
-        matrix_b = input_matrix(n, float); fileProcessing('\nMatriks B :'); fileProcessing(matrix_b)
+        input_b = input_matrix(n, float)
+        matrix_b = np.squeeze(input_b); fileProcessing('\nMatriks B :'); fileProcessing(matrix_b)
     except Exception:
         print("Terdapat kesalahan format yang Anda masukkan"); fileProcessing('\nTerdapat kesalahan format yang Anda masukkan')
         return
-    
-    print(matrix_a); print(matrix_b)
     
     try:
         y = determine_solution(matrix_a, matrix_b)
